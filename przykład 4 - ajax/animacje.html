@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animacje</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!-- Dołączamy jQuery UI -->
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            transition: background-color 0.5s ease; /* Dodajemy przejście dla zmiany koloru tła */
+        }
+    </style>
+</head>
+<body>
+
+    <a href="event.html" class="content-link">Przejdź do innego dokumentu</a>
+    <div class="content"></div>
+    <div class="box"></div>
+    <h1>GÓWNO</h1>
+
+    <!-- to mi chat wypluł-->
+    <!-- <script>
+    $(document).ready(function() {
+        $('.content').click(function() {
+            // Przed wywołaniem metody load()
+            console.log("Przed załadowaniem dokumentu");
+
+            // Wywołanie metody load()
+            $('.content').load('sciezka/do/dokumentu', function() {
+                // Po wywołaniu metody load()
+                console.log("Po załadowaniu dokumentu");
+            });
+        });
+    });
+    </script> -->
+
+    <script>
+        //I WERSJA
+        // $(function (){
+        //     $(".content-link").on("click", function (event) {
+        //         event.preventDefault();
+        //         $('.content').fadeOut();
+        //         $('.content').load($(this).attr('href'), function () {
+        //             $('.content').fadeIn();
+        //         });
+        //     });
+        // });
+
+        // POPRAWIONE- zeby nie znikała po raz drugi
+        // $(function (){
+        //     $('.content-link').click(function () {
+        //         var zmienna = $(this);
+        //         $('.content').fadeOut('medium', function () {
+        //             $('.content').load(zmienna.attr('href'), function () {
+        //                 $('.content').fadeIn();
+        //             }); 
+        //         });
+        //         return false;
+        //     });
+        // });
+
+        // WYKORZYTSANIE FUNKCJI ANIMATE
+        $(function () {
+            $('.content-link').click(function () {
+                var zmienna = $(this);
+                $('.content').animate({height: '500px', width: '500px'}, function () {
+                    $('.content').load(zmienna.attr('href'), function () {
+                        $('.content').animate({ height: '130px', width: '0px'});
+                    }); 
+                });
+                return false;
+            });
+
+            // DO TEGO TRZEBA UŻYĆ ODPOWIEDNIEJ BIBLIOTEKI W HEAD!!!
+            $('.box').mouseenter(function () { // Zdarzenie najechania myszką na element
+                $(this).animate({backgroundColor: 'red'}, 'slow'); // Animacja zmiany koloru tła na czerwony
+            });
+
+            $('.box').mouseleave(function () { // Zdarzenie opuszczenia myszką elementu
+                $(this).animate({backgroundColor: 'blue'}, 'slow'); // Animacja zmiany koloru tła na niebieski
+            });
+
+            // inne: resize (zmiana okna przeglądarki), scroll (przewijanie strony)
+        });
+    </script>
+</body>
+</html>

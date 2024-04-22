@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* #element {
+            width: 200px;
+            height: 200px;
+            background-color: lightblue; 
+        }
+        #element2 {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(90, 27, 82);
+            
+        }
+        #element3 {
+            width: 10px;
+            height: 10px;
+            background-color: rgb(16, 182, 44); 
+        } */
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script type="text/javascript">
+        // $(document).ready(function () {
+        //     alert('To jest pierwszy komunikat napisany z wykorzystaniem jQuery ');
+        // });
+        //$(window).on('load', function() {alert('To jest drugi komunikat napisany z wykorzystaniem jQuery ');})
+
+        $(function () {
+            $('td').one('click', edycja);
+            
+            /////////////////////////////////////////
+            // dodajemy i definiujemy wlasne zdarzenie tutaj, o chcecmy by zostało wykoanne po załafowaniu całego dokumentu
+            $('button').bind('zdarzenie', function () { 
+                alert('Naciśnięto przycisk!'); 
+            });
+            
+            $('button').on('click', function() {
+                $('button').trigger('zdarzenie');
+                edycja(); // Dodatkowe powiązanie kliknięcia przycisku z funkcją edycja()
+            });
+            
+            //$('button').unbind('zdarzenie'); // Unbind tylko dla zdarzenia przycisku
+            //$('td').unbind('click'); // Unbind tylko dla zdarzenia kliknięcia w komórkę tabeli
+            //$('*').unbind(); // Unbind dla wszystkich elementów na stronie
+
+            //////////////////////
+            //ANIMACJE
+
+            // // slideUp() - element zmniejsza swoją wysokość
+            // $('#element2').slideUp(3000);
+
+            // // slideDown() - element zwiększa swoją wysokość
+            // $('#element3').click(function () {
+            //     $(this).slideDown(5000);
+            // });
+            
+            // // Po załadowaniu dokumentu wykonujemy animację fadeIn() dla elementu o id="element"
+            // $('#element').fadeIn(2000); // Płynne pojawienie się elementu przez 2 sekundy (2000 milisekund)
+    
+            // // Po kliknięciu na element wykonujemy animację fadeOut()
+            // $('#element').click(function() {
+            // $(this).fadeOut(1000); // Płynne zniknięcie elementu przez 1 sekundę (1000 milisekund)
+            //  });
+
+        });
+
+        function edycja() { // to dfinuje logikę, która ma być wykonana w odpowiedzi na określone zdarzenia
+            var wiersz = $(this);
+            wiersz.html('<input id="edycja" value="' + wiersz.text() + '">'); // ustawienie tekstu/kodu html
+            $('#edycja').blur(function () {
+                wiersz.text($(this).val()); // pobranie zawartosci okreslonego elementu
+                wiersz.one('click', edycja); // ustawienie zawartości...
+            }).focus();
+        }
+    
+        </script>
+    </script>
+</head>
+<body>
+    <table>
+        <tr id="element"><td>Jeden</td></tr>
+        <tr id="element2"><td>Dwa</td></tr>
+        <tr id="element3"><td>Trzy</td></tr>
+        <tr><td>Cztery</td></tr>
+    </table>
+    <button>Kliknij mnie</button>
+</body>
+</html>

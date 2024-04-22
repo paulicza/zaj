@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        .niebieski {
+            background: Blue;
+            font-size: xx-large;
+        }
+        .parzyste {
+            background-color: yellow;
+        }
+        .koloruj  {
+            color: green;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+</head>
+<body>
+    <script>
+        $(function () {
+            // :contains zwraca elementy, które posiadają treść podaną jako jej argument
+            $('button:contains(\'Niebieski\')').click(function () {
+            $('#first').addClass('niebieski');
+            });
+            $('button:contains(\'Czarny\')').click(function () {
+            $('#first').removeClass('niebieski');
+            });
+            $('button:contains(\'nadany\')').click(function () {
+            $('#toggle').toggleClass('niebieski'); // umożliwia przełączanie międyz kolorami bo takie id mu nadałam
+            });
+            //<button onclick = "jakas_funkcja()">jakiś przycisk </button>
+            $("#tabela tr:even").addClass("parzyste");
+            $("[href]").addClass("koloruj");
+            $("ol li a").parent().addClass("koloruj"); //PARENT KONIECZNIE ZEBY ZADZIAŁO 
+        });
+    </script>
+
+    
+    <table id="tabela">
+        <tr><td>Poniedziałek</td></tr>
+        <tr><td>Wtorek</td></tr>
+        <tr><td>Środa</td></tr>
+        <tr><td>Czwartek</td></tr>
+        <tr><td>Piątek</td></tr>
+        <tr><td>Sobota</td></tr>
+        <tr><td>Niedziela</td></tr>
+    </table>
+    <div>
+        <button>Niebieski</button>
+        <button>Czarny</button>
+        <span id="first">Tekst testowy do zmiany koloru</span>
+    </div>
+    <div>
+        <button>który zostanie nadany przez funkcję.</button>
+        <span id="toggle">Zmiana przez przełączanie klas.</span>
+    </div>
+    <br>
+    <ol id="lista">
+        <li>piątek<a href="strona2agh.pdf">Link2</a></li>
+        <li class="koloruj">sobota</li>
+        <li>niedziela</li>
+        <li>weekeneeen  <a href="strona1.html">Link1</a></li>
+    </ol>
+</body>
+</html>

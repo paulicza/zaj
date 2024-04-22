@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Library Book Search by Author and Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4');
+            background-size: cover; /*obraz dopasowany do okna przeglądarki*/
+            background-attachment: fixed; /*obraz nie przewija się*/
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            opacity: 0.95; /*troszke niepreźroczytsy*/
+        }
+        .navbar {
+            background-color: #563d7c;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Search Books on Open Library</h1>
+        <div class="row">
+        <!-- Po autorze -->
+            <div class="col-md-6">
+                <h3>Search by Author</h3>
+                <div class="form-group">
+                    <input type="text" id="searchAuthorInput" class="form-control" placeholder="Enter author name">
+                    <button id="searchByAuthorButton" class="btn btn-primary mt-2">Search by Author</button>
+                </div>
+                <div id="resultsByAuthor" class="mt-3"></div>
+            </div>
+            <!-- Po tytule-->
+            <div class="col-md-6">
+                <h3>Search by Title</h3>
+                <div class="form-group">
+                    <input type="text" id="searchTitleInput" class="form-control" placeholder="Enter book title">
+                    <button id="searchByTitleButton" class="btn btn-primary mt-2">Search by Title</button>
+                </div>
+            <div id="resultsByTitle" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function searchBooks(query, url, resultDiv) {
+            $(resultDiv).html('<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></div>');
+            /*spinner-border - animowany spinner, text-primary - podstawwy lkolor cyzli niebieski, role="status" atrybut HTNML który informuje przeglądarke internetową o roli informacyjnej, że się wczytuje, sr-only ukrycie trscie loading ale umozliwiony odczyt ekranowy*/
+            $.getJSON(url, function(data) {
+                $(resultDiv).empty(); /*udsunięcie wczesniej wyświetlonych wyników*/
+                if (data.docs && data.docs.length > 0) { /*sprawdzenie czy odpowiedz zawiera e;lementy docs i czy lista docs nie jest pusta; docs odnoszą się do danych zwracanych przez api*/
+                    data.docs.forEach(item => { /*iteracj aprzez każdy element czyli książki*/
+                        var bookTitle = item.title;
+                        var authorNames = item.author_name ? item.author_name.join(', ') : 'Unknown author'; /*jęsli istnieją dla danej książki informacje o autorach to używa się metody join(,) by połączyć nazwiks autorów z tavlicy w jeden ciąg znaków oddzielające je przecinkami - jedna zminna przechowującawszytskie nazwiska autorów książki w formie tekstu */
+                        var card = $(`
+                            <div class="card" style="width: 18rem; margin-bottom: 20px;"> 
+                                <div class="card-body">
+                                    <h5 class="card-title">${bookTitle}</h5>
+                                    <p class="card-text">Author: ${authorNames}</p>
+                                </div>
+                            </div>
+                        `); 
+                        /* reprezentacja pojedyńczej książki; utworzony na podstawie ciągu znaków; apostrof to backtick, znak odwrócenia ciagu znaków, pozwala na tworzenie wieloweirszowych cz i osadzanie zmiennych za pomocą składni $() */
+                        /*card to styl wyników - dlatego znajdują się w obramowaniu; 18rem - szerokość karty*/
+                        /*card-body to wewnętrzny kontener gdzie znajduje się tytuł i autor*/
+                        $(resultDiv).append(card); /*utworzone card ma się wyświetlić*/
+                    });
+                } else {
+                    $(resultDiv).html('<p>No books found.</p>');
+                }
+            }).fail(function() {
+                $(resultDiv).html('<p>Error fetching data.</p>'); /*w przypadku niepowodzenia żądania AJAX, cyzli np damy szukaj nic nie wpisując*/
+            });
+        }
+
+        $('#searchByAuthorButton').click(function() {
+            var authorQuery = $('#searchAuthorInput').val(); /* ustawienie obsługi zdarzenia kliknięcia na tym przycisku (on jest ustawiony w kontenerrach), po kliknięciu zapytanie jets pobierane z pola tekstowego*/
+            var urlByAuthor = `https://openlibrary.org/search.json?author=${encodeURIComponent(authorQuery)}`; /*tworzony odpowiedni adres URL do wyszukiwania książek po autorze*/
+            searchBooks(authorQuery, urlByAuthor, '#resultsByAuthor'); /*wywoływana jest funkcja searchBooks z odpowiednimi parametrami*/
+        });
+        $('#searchByTitleButton').click(function() {
+            var titleQuery = $('#searchTitleInput').val();
+            var urlByTitle = `https://openlibrary.org/search.json?title=${encodeURIComponent(titleQuery)}`;
+            searchBooks(titleQuery, urlByTitle, '#resultsByTitle');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Obsługa plików JSON</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script type="text/javascript">
+    var rosliny = {
+      "Rosliny": {
+        "Egzotyczne": [
+          { "Nazwa": "Palma", "Miejsce": "Grecja" },
+          { "Nazwa": "Eukaliptus", "Miejsce": "Australia" },
+          { "Nazwa": "Dynia", "Miejsce": "Polska" }
+        ]
+      }
+    };
+    
+    // wykorzytsanie pętli for
+    // $(function () {
+    //   for (var i = 0; i < rosliny.Rosliny.Egzotyczne.length; i++) {
+    //     $('#plants').append('<div>' + rosliny.Rosliny.Egzotyczne[i].Nazwa + ': ' +
+    //          rosliny.Rosliny.Egzotyczne[i].Miejsce + '</div>');
+    //   }
+    // });
+
+    // wykorzytsanie funkcji map()
+    $(function () {
+      var egzotyczneRośliny = rosliny.Rosliny.Egzotyczne.map(function(roślina) { // ma iteruje przez liste roslin i tworzy towa tablicę
+        return '<div>' + roślina.Nazwa + ': ' + roślina.Miejsce + '</div>';
+      });
+      
+      $('#plants').append(egzotyczneRośliny);
+    });
+  
+  </script>
+</head>
+<body>
+  <h1>Spis roślin:</h1>
+  <div id="plants"></div>
+</body>
+</html>

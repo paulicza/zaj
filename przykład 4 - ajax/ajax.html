@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style>
+        a { margin: 10px; color: black}
+        #content { border: 1px solid black; padding: 20px; width: 50%; }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $('a').click(function () {
+                $('#content').load($(this).attr('href'));
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="animacje.html">Strona 1</a>
+            <a href="event.html">Strona 2</a>
+            <a href="index.html">Strona 3</a>
+            <a href="styl.html">Strona 4</a>
+        </nav>
+    </header>
+    <div id="content"></div>
+</body>
+</html>

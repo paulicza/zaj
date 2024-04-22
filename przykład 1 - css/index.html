@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pierwsza strona w jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        // jQuery(document).ready(function () {
+        // alert('To jest pierwszy komunikat napisany z wykorzystaniem jQuery ');
+        // });
+
+        $(function () {
+        $('#paragraf_1').css('color', 'red').append(' to pierwsza cyfra');
+        $('.klasa_2').css('color', 'green').append(' to kolejna cyfra');
+        $("div").css("color", "blue");
+        $(".klasa_1").css("font-size", "large");
+        $("tr td").css("background-color", "yellow");
+        $('table tr:first').css('color', 'grey');
+        $('tr:last').css('color', 'green');
+        $('p:even').css({'color':'pink', 'font-size': '20px', 'background':'yellow' }); // even - parzysty, odd - nieparzysty
+        $("td:eq(1)").css("color", "red")
+        $("td:gt(2)").css("text-decoration", "underline")
+        $("td:lt(4)").css("font-weight", "bold")
+        // eq(n) - kolejny element z listy 
+        // gt(n) - większy od n 
+        // lt(n) - mniejszy od n 
+        $('[href]').css('border', '1px solid black').css('padding', '3px'); // do wszytskich
+        $('a[href*=agh]').css('border', '1px solid pink'); // ten co w tresci linku zawiera agh (ale nie mamy wiec nic si enie dzieje)
+        $('a[href$=\'.html\']').css('border', '1px solid red'); // do wszystkich zawierający html
+        
+        $('input:text').css('border', '2px solid blue');
+        $('input:submit').css('background-color', 'green').css('color', 'white');
+        $('input:checkbox').css('margin-left', '20px');
+        $("input").css("background-color", "red");
+        $("input:enabled").css("border", "4px solid blue");
+            // enabled - elementy aktywne; disabled - elementy nieaktywne; checked - elementy, które są aktualnie zaznaczone
+        $('option:selected').css('background-color', 'lightgrey');
+            // selected - do elementów <option> w elementach <select>, które są obecnie zaznaczone.
+        $('input[type="checkbox"]').change(function() {
+            if ($(this).is(":checked")) {
+                $(this).next().css('color', 'red');
+            } else {
+                $(this).next().css('color', 'black');
+            }})
+        $('#paragraf_1').css({"font-weight":"bold", "font-style" : "italic", "text-decoration": "underline"});
+        alert('Wartość atrybutu color elementu o id="paragraf_1" to ' + $('#paragraf_1').css('color'));
+        });
+
+    </script>
+</head>
+<body>
+    <p id="paragraf_1">Jeden</p>
+    <p class = "klasa_2">Dwa</p>
+    <p>Trzy</p>
+    <p>Cztery</p>
+    <div>Pięć</div>
+    <div class="klasa_1">Sześć</div>
+
+    <table>
+        <tr><td>Mercedes</td></tr>
+        <tr><td>Audi</td></tr>
+        <tr><td>BMW</td></tr>
+        <tr><td>Toyota</td></tr>
+        <tr><td>Kia</td></tr>
+        <tr><td>Fiat</td></tr>
+    </table>
+
+    <a href="strona1.html">Link1</a>
+    <a href="strona2agh.pdf">Link2</a>
+    <a href="strona3.html">Link3</a>
+
+    <p></p>
+    <form id="myForm">
+        <input type="text" name="username" />
+        <input type="submit" value="Submit" />
+        <input type="checkbox" id="myCheckbox" />
+        <label for="myCheckbox">Change text color</label>
+    </form>
+    <p></p>
+    <select>
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes" selected>Mercedes</option>
+        <option value="audi">Audi</option>
+    </select>
+</body>
+</html>
